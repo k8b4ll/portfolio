@@ -29,8 +29,8 @@ body {
 
 header {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  column-gap: clamp(24px, 6vw, 80px);
+  grid-template-columns: 1fr auto;
+  /*column-gap: clamp(24px, 6vw, 80px);*/
   align-items: start;
   font-size: clamp(12px, 1.3vw, 15px);
   line-height: 1.45;
@@ -95,13 +95,13 @@ header {
 
 /* Full overlay canvas that can float over header/nav */
 #inkCanvas{
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: fixed;      /* removes it from layout flow */
+  inset: 0;             /* top:0 right:0 bottom:0 left:0 */
   width: 100vw;
-  height: 100vh;          /* JS will resize height to stop at footer line */
-  z-index: 999;           /* above your header/nav */
-  pointer-events: none;   /* IMPORTANT: lets you still click links */
+  height: 100vh;        /* JS can still override height */
+  z-index: 999;         /* floats above header/footer */
+  pointer-events: none; /* IMPORTANT: doesn't block clicks */
+  display: block;
 }
 
 /* Anchor holds layout position only (no visible text) */
