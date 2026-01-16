@@ -51,17 +51,12 @@ header {
   font-weight: 600;
 }*/ 
 
-.selected-particles{
-  position: relative;
-  width: min(520px, 100%);
-  height: 140px;               /* controls bubble height */
+.selected{
+  grid-column: 2;
+  justify-self: start;
+  text-align: left;
 }
 
-.particles-canvas{
-  width: 100%;
-  height: 100%;
-  display: block;
-}
 
 @media (max-width: 700px) {
   header {
@@ -96,4 +91,22 @@ header {
   .footer-right {
     text-align: left;
   }
+}
+
+/* Full overlay canvas that can float over header/nav */
+#inkCanvas{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;          /* JS will resize height to stop at footer line */
+  z-index: 999;           /* above your header/nav */
+  pointer-events: none;   /* IMPORTANT: lets you still click links */
+}
+
+/* Anchor holds layout position only (no visible text) */
+.selected-anchor{
+  width: min(520px, 100%);
+  height: 140px;          /* controls target text area */
+  /* keep it where you already placed .selected (grid-column etc.) */
 }
