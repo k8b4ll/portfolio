@@ -55,49 +55,180 @@
         </div>
       </footer>
     </div>
-    <script>
-  (function () {
-    const inks = document.querySelectorAll('.ink');
+   <script>
+(() => {
+  const el = document.querySelector('.selected-particles');
+  if (!el) return;
 
-    inks.forEach((el) => {
-      let dragging = false;
+  const canvas = el.querySelector('.particles-canvas');
+  const ctx = canvas.getContext('2d');
 
-      const setRevealFromX = (clientX) => {
-        const r = el.getBoundingClientRect();
-        const x = Math.min(Math.max(clientX - r.left, 0), r.width);
-        const pct = (x / r.width) * 100;
-        el.style.setProperty('--reveal', pct.toFixed(1) + '%');
-      };
+  const settings = {
+    count: 1200,         // more = denser text
+    r: 1.4,              // particle radius (px)
+    floatSpeed: 0.45,    // drifting speed
+    wander: 0.09,        // random wiggle
+    pull: 0.085,         // how strongly they pull into text
+    damp: 0.88,          // smoothing
+    rehideMs: 5000       // revert after 5 seconds
+  };
 
-      const start = (x) => {
-        dragging = true;
-        el.classList.add('is-revealing');
-        setRevealFromX(x);
-      };
+  let particles = [];
+  let formed = false;
+  let revertTimer = null;
 
-      const move = (x) => {
-        if (!dragging) return;
-        setRevealFromX(x);
-      };
+  const dpr = () => Math.max(1, Math.floor(window.devicePixelRatio || 1));
 
-      const end = () => {
-        dragging = false;
-        // Optional: snap fully open if mostly revealed
-        const current = parseFloat(getComputedStyle(el).getPropertyValue('--reveal')) || 0;
-        if (current > 70) el.style.setProperty('--reveal', '100%');
-      };
+  function resize() {
+    const rect = el.getBoundingClientRect();
+    const scale = dpr();
+    canvas.width = Math.max(1, Math.floor(rect.width * scale));
+    canvas.height = Math.max(1, Math.floor(rect.height * scale));
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+  }
 
-      // Touch
-      el.addEventListener('touchstart', (e) => start(e.touches[0].clientX), { passive: true });
-      el.addEventListener('touchmove', (e) => move(e.touches[0].clientX), { passive: true });
-      el.addEventListener('touchend', end);
+  function buildParticles() {
+    const { width: w, height: h } = el.getBoundingClientRect();
+    particles = Array.from({ length: settings.count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.6,
+      vy: (Math.random() - 0.5) * 0.6,
+      tx: null,
+      ty: null
+    }));
+  }
 
-      // Mouse drag (nice extra on desktop)
-      el.addEventListener('mousedown', (e) => start(e.clientX));
-      window.addEventListener('mousemove', (e) => move(e.clientX));
-      window.addEventListener('mouseup', end);
-    });
-  })();
+  function getTextTargets() {
+    const { width: w, height: h } = el.getBoundingClientRect();
+    const off = document.createElement('canvas');
+    off.width = Math.max(1, Math.floor(w));
+    off.height = Math.max(1, Math.floor(h));
+    const o = off.getContext('2d');
+
+    const line1 = el.dataset.line1 || '';
+    const line2 = el.dataset.line2 || '';
+
+    // text styling
+    o.clearRect(0, 0, w, h);
+    o.fillStyle = '#000';
+    o.textBaseline = 'top';
+    o.textAlign = 'left';
+
+    const fs1 = Math.max(14, Math.min(22, w * 0.05));
+    const fs2 = fs1;
+
+    o.font = `600 ${fs1}px Helvetica Neue, Arial, sans-serif`;
+    const padX = 0;
+    const padY = 18;
+    o.fillText(line1, padX, padY);
+
+    o.font = `600 ${fs2}px Helvetica Neue, Arial, sans-serif`;
+    o.fillText(line2, padX, padY + fs1 + 10);
+
+    const img = o.getImageData(0, 0, off.width, off.height).data;
+
+    // sampling density
+    const step = Math.max(3, Math.floor(Math.min(w, h) / 55));
+    const pts = [];
+    for (let y = 0; y < h; y += step) {
+      for (let x = 0; x < w; x += step) {
+        const i = (Math.floor(y) * Math.floor(w) + Math.floor(x)) * 4;
+        if (img[i + 3] > 20) pts.push({ x, y });
+      }
+    }
+    if (!pts.length) return [];
+
+    // match particle count
+    const out = [];
+    for (let i = 0; i < settings.count; i++) {
+      out.push(pts[(Math.random() * pts.length) | 0]);
+    }
+    return out;
+  }
+
+  function reveal() {
+    formed = true;
+    const targets = getTextTargets();
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].tx = targets[i]?.x ?? particles[i].x;
+      particles[i].ty = targets[i]?.y ?? particles[i].y;
+    }
+    clearTimeout(revertTimer);
+    revertTimer = setTimeout(hide, settings.rehideMs);
+  }
+
+  function hide() {
+    formed = false;
+    for (const p of particles) {
+      p.tx = null;
+      p.ty = null;
+    }
+    clearTimeout(revertTimer);
+    revertTimer = null;
+  }
+
+  function tick() {
+    const { width: w, height: h } = el.getBoundingClientRect();
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#000';
+
+    for (const p of particles) {
+      if (formed && p.tx != null) {
+        // pull into text
+        const dx = p.tx - p.x;
+        const dy = p.ty - p.y;
+        p.vx = p.vx * settings.damp + dx * settings.pull;
+        p.vy = p.vy * settings.damp + dy * settings.pull;
+        p.x += p.vx;
+        p.y += p.vy;
+      } else {
+        // drift
+        p.vx += (Math.random() - 0.5) * settings.wander;
+        p.vy += (Math.random() - 0.5) * settings.wander;
+
+        const m = settings.floatSpeed;
+        p.vx = Math.max(-m, Math.min(m, p.vx));
+        p.vy = Math.max(-m, Math.min(m, p.vy));
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // bounce edges
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+        p.x = Math.min(Math.max(p.x, 0), w);
+        p.y = Math.min(Math.max(p.y, 0), h);
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, settings.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  // Desktop hover
+  el.addEventListener('mouseenter', reveal);
+  el.addEventListener('mouseleave', hide);
+
+  // Mobile: press/swipe reveal (pointer events cover touch + pen + mouse)
+  el.addEventListener('pointerdown', () => reveal());
+  el.addEventListener('pointermove', () => formed && reveal()); // keeps it “alive” while swiping
+  el.addEventListener('pointerup', () => {/* timer will hide after 5s */});
+
+  window.addEventListener('resize', () => {
+    resize();
+    buildParticles();
+    if (formed) reveal();
+  });
+
+  // init
+  resize();
+  buildParticles();
+  tick();
+})();
 </script>
   </body>
 </html>
