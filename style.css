@@ -86,7 +86,8 @@ main {
 
 
 .selected {
-  justify-self: center;
+  grid-column: 2;
+  justify-self: start;
   align-self: center;
   font-size: clamp(13px, 1.4vw, 17px);
   font-weight: 600;
@@ -144,9 +145,6 @@ footer {
     align-items: start;
   }
 
-  .selected {
-    justify-self: start;
-  }
 
   footer {
     grid-template-columns: 1fr;
