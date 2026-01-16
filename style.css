@@ -43,13 +43,13 @@ header {
   gap: 2px;
 }
 
-.header-center {
+/*.header-center {
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 2px;
   font-weight: 600;
-}
+}*/ 
 
 /* Fixed top-right "About" link */
 .header-right {
