@@ -51,133 +51,16 @@ header {
   font-weight: 600;
 }*/ 
 
-/* Fixed top-right "About" link */
-.header-right {
-  position: fixed; /* take the contents inside .header-right and stack them (flex-direction: column) */
-  top: clamp(18px, 2.4vw, 34px);   /* match page padding */
-  right: clamp(18px, 2.4vw, 34px);
-
-  z-index: 1000; /* keep this on top of other elements so it’s always visible */
-  
-  text-align: right; /* align text to the right edge inside this element */
-  display: flex; 
-  flex-direction: column; /* stack the items vertically (top to bottom) */
-  gap: 6px; /* add a small space between stacked items */
-}
-
-.projects {
-  display: flex;
-  justify-content: flex-end;
-  gap: clamp(6px, 1.1vw, 12px);
-  align-items: center;
-}
-
-.projects span:first-child {
-  margin-right: clamp(6px, 0.8vw, 10px);
-  font-weight: 600;
-}
-
-main {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  align-items: center;
-  gap: clamp(20px, 5vw, 72px);
-}
-
-.hero {
-  font-size: clamp(72px, 13.4vw, 176px);
-  font-weight: 600;
-  letter-spacing: -0.05em;
-}
-
-
-.selected {
-  grid-column: 2; /* desktop: place item in the right column */
-  justify-self: start; /* align left within that column */
-  align-self: center;
-  transition: transform 0.4s ease, opacity 0.3s ease;
-  font-size: clamp(13px, 1.4vw, 17px);
-  font-weight: 600;
-  line-height: 1.6;
-  color: var(--muted);
-}
-
-footer {
-  border-top: 1px solid var(--border);
-  padding-top: clamp(12px, 2.2vw, 20px);
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: start;
-  font-size: clamp(12px, 1.3vw, 15px);
-  font-weight: 600;
-  gap: clamp(14px, 2vw, 24px);
-}
-
-.footer-left {
-  display: flex;
-  gap: clamp(16px, 4vw, 48px);
-  flex-wrap: wrap;
-}
-
-.footer-center {
-  text-align: center;
-}
-
-.footer-right {
-  text-align: right;
-  line-height: 1.5;
-}
-
-.scope {
-  font-size: clamp(10px, 1.05vw, 12px);
-  font-weight: 500;
-  margin-top: 4px;
-  color: var(--muted);
-}
-
-/* Invisible-ink wrapper */
-.ink {
+.selected-particles{
   position: relative;
-  display: inline-block;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: pan-y; /* allows vertical scroll while we handle horizontal swipes */
+  width: min(520px, 100%);
+  height: 140px;               /* controls bubble height */
 }
 
-/* Your existing .selected styles can stay; this adds the effect */
-.ink__text {
-  position: relative;
-  z-index: 1;
-}
-
-/* The "ink" cover */
-.ink__cover {
-  position: absolute;
-  inset: -6px;  /* a little padding around text */
-  border-radius: 999px;
-  z-index: 2;
-
-  /* This is the "hidden" look */
-  background: rgba(17, 17, 17, 0.10);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-
-  /* We'll reveal by changing a CSS variable */
-  clip-path: inset(0 calc(100% - var(--reveal, 0%)) 0 0 round 999px);
-  transition: clip-path 350ms ease;
-}
-
-/* Desktop hover reveal */
-@media (hover: hover) and (pointer: fine) {
-  .ink:hover .ink__cover {
-    --reveal: 100%;
-  }
-}
-
-/* Keyboard accessibility (tabbing onto it) */
-.ink:focus-within .ink__cover {
-  --reveal: 100%;
+.particles-canvas{
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 @media (max-width: 700px) {
