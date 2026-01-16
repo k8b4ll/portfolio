@@ -51,12 +51,18 @@ header {
   font-weight: 600;
 }
 
+/* Fixed top-right "About" link */
 .header-right {
-  justify-self: end;
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  position: fixed; /* take the contents inside .header-right and stack them (flex-direction: column) */
+  top: clamp(18px, 2.4vw, 34px);   /* match page padding */
+  right: clamp(18px, 2.4vw, 34px);
+
+  z-index: 1000; /* keep this on top of other elements so it’s always visible */
+  
+  text-align: right; /* align text to the right edge inside this element */
+  display: flex; 
+  flex-direction: column; /* stack the items vertically (top to bottom) */
+  gap: 6px; /* add a small space between stacked items */
 }
 
 .projects {
