@@ -51,5 +51,49 @@
         </div>
       </footer>
     </div>
+    <script>
+  (function () {
+    const inks = document.querySelectorAll('.ink');
+
+    inks.forEach((el) => {
+      let dragging = false;
+
+      const setRevealFromX = (clientX) => {
+        const r = el.getBoundingClientRect();
+        const x = Math.min(Math.max(clientX - r.left, 0), r.width);
+        const pct = (x / r.width) * 100;
+        el.style.setProperty('--reveal', pct.toFixed(1) + '%');
+      };
+
+      const start = (x) => {
+        dragging = true;
+        el.classList.add('is-revealing');
+        setRevealFromX(x);
+      };
+
+      const move = (x) => {
+        if (!dragging) return;
+        setRevealFromX(x);
+      };
+
+      const end = () => {
+        dragging = false;
+        // Optional: snap fully open if mostly revealed
+        const current = parseFloat(getComputedStyle(el).getPropertyValue('--reveal')) || 0;
+        if (current > 70) el.style.setProperty('--reveal', '100%');
+      };
+
+      // Touch
+      el.addEventListener('touchstart', (e) => start(e.touches[0].clientX), { passive: true });
+      el.addEventListener('touchmove', (e) => move(e.touches[0].clientX), { passive: true });
+      el.addEventListener('touchend', end);
+
+      // Mouse drag (nice extra on desktop)
+      el.addEventListener('mousedown', (e) => start(e.clientX));
+      window.addEventListener('mousemove', (e) => move(e.clientX));
+      window.addEventListener('mouseup', end);
+    });
+  })();
+</script>
   </body>
 </html>
