@@ -135,13 +135,58 @@ footer {
   color: var(--muted);
 }
 
+/* Invisible-ink wrapper */
+.ink {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y; /* allows vertical scroll while we handle horizontal swipes */
+}
+
+/* Your existing .selected styles can stay; this adds the effect */
+.ink__text {
+  position: relative;
+  z-index: 1;
+}
+
+/* The "ink" cover */
+.ink__cover {
+  position: absolute;
+  inset: -6px;  /* a little padding around text */
+  border-radius: 999px;
+  z-index: 2;
+
+  /* This is the "hidden" look */
+  background: rgba(17, 17, 17, 0.10);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  /* We'll reveal by changing a CSS variable */
+  clip-path: inset(0 calc(100% - var(--reveal, 0%)) 0 0 round 999px);
+  transition: clip-path 350ms ease;
+}
+
+/* Desktop hover reveal */
+@media (hover: hover) and (pointer: fine) {
+  .ink:hover .ink__cover {
+    --reveal: 100%;
+  }
+}
+
+/* Keyboard accessibility (tabbing onto it) */
+.ink:focus-within .ink__cover {
+  --reveal: 100%;
+}
+
 @media (max-width: 700px) {
   header {
     grid-template-columns: 1fr;
     align-items: start;
     /**gap: 12px;**/
   }
-
+  
   .header-right,
   .header-center {
     justify-self: start;
