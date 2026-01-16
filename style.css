@@ -86,8 +86,8 @@ main {
 
 
 .selected {
-  grid-column: 2;
-  justify-self: start;
+  grid-column: 2; /* desktop: place item in the right column */
+  justify-self: start; /* align left within that column */
   align-self: center;
   font-size: clamp(13px, 1.4vw, 17px);
   font-weight: 600;
@@ -128,10 +128,11 @@ footer {
   color: var(--muted);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 700px) {
   header {
     grid-template-columns: 1fr;
-    gap: 12px;
+    align-items: start;
+    /**gap: 12px;**/
   }
 
   .header-right,
@@ -145,6 +146,10 @@ footer {
     align-items: start;
   }
 
+  .selected {
+    grid-column: 1; /* mobile: single-column layout */
+    justify-self: start; /* keep text left-aligned */
+  }
 
   footer {
     grid-template-columns: 1fr;
