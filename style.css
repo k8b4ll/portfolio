@@ -52,8 +52,8 @@ header {
 }*/ 
 
 .selected {
-  grid-column: 2;          /* put it in the right box */
-  justify-self: start;     /* align it to the left INSIDE that box */
+  grid-column: 2;          /* desktop: place in the right column */
+  justify-self: start;     /* align left within that right column */
   text-align: left;
 
   align-self: center;
@@ -61,6 +61,40 @@ header {
   font-weight: 600;
   line-height: 1.6;
   color: var(--muted);
+}
+
+footer{
+  border-top: 1px solid var(--border);
+  padding-top: clamp(12px,2.2vw,20px);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: start;
+  font-size: clamp (12px,1.3vw,15px);
+  font-weight: 600;
+  gap: clamp (14px,2vw, 24px);
+}
+
+.footer-left {
+  display: flex;
+  gap: clamp (16px, 4v, 48px);
+  flex-wrap: wrap;
+}
+
+.footer-right {
+  text-align: right;
+  line-height: 1.5;
+}
+
+.scope {
+  font-size: clamp (10px, 1.05vw, 12px);
+  font-weight: 500;
+  margin-top: 4px;
+  color: var(--muted);
+}
+.footer-left {
+  display: flex;
+  gap: clamp (16px, 4v, 48px);
+  flex-wrap: wrap;
 }
 
 @media (max-width: 700px) {
