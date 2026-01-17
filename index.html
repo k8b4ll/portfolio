@@ -92,10 +92,14 @@
 
   function resizeCanvas() {
     const dpr = Math.max(1, window.devicePixelRatio || 1);
-    const h = getOverlayHeight();
-    canvas.style.height = h + "px";
+    const h = Math.max(200, getOverlayHeight());
+
+    canvas.style.width = window.innerWidth + "px";
+  canvas.style.height = h + "px";
+    
     canvas.width = Math.floor(window.innerWidth * dpr);
     canvas.height = Math.floor(h * dpr);
+    
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
@@ -182,6 +186,8 @@
   }
 
   function tick() {
+    ctx.fillRect(20, 20, 6, 6); // TEMP TEST
+    
     const w = window.innerWidth;
     const h = getOverlayHeight();
 
