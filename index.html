@@ -47,15 +47,16 @@
       </footer> 
     </div>
     <!-- end .page -->
-    <!-- <canvas id="inkCanvas"></canvas> -->
-    <canvas
-  id="inkCanvas"
-  style="position:fixed; inset:0; width:100vw; height:100vh; z-index:999; pointer-events:none;"
-></canvas>
+  <canvas id="inkCanvas"></canvas>
    <script>
 (() => {
   const canvas = document.getElementById("inkCanvas");
   const ctx = canvas.getContext("2d");
+
+  console.log("✅ particle script running");
+ctx.fillStyle = "#000";
+ctx.fillRect(30, 30, 12, 12); // TEMP test square
+
   
   const anchor = document.querySelector(".selected-anchor");
   const footer = document.querySelector("footer");
