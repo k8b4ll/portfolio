@@ -191,7 +191,7 @@
     const w = window.innerWidth;
     const h = getOverlayHeight();
 
-    ctx.clearRect(0, 0, w, h);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#000";
 
     for (const p of particles) {
@@ -284,11 +284,13 @@
     if (formed) reveal();
   });
 
-  // Init
+  // Init (wait until layout is finalized)
+window.addEventListener("load", () => {
   resizeCanvas();
   buildParticles();
   tick();
-})();
+});
+
 </script>
 
   </body>
