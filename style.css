@@ -43,6 +43,20 @@ header {
   gap: 2px;
 }
 
+/* Fixed top-right "About" link */
+.header-right {
+  position: fixed; /* pin to viewport, not the grid */
+  top: clamp(18px, 2.4vw, 34px);   /* match page padding */
+  right: clamp(18px, 2.4vw, 34px);
+
+  z-index: 1000;
+
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 /*.header-center {
   text-align: center;
   display: flex;
