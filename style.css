@@ -112,7 +112,7 @@ main {
    Footer (keep for now; you can remove later)
 ========================================================= */
 
-footer {
+/*footer {
   border-top: 1px solid var(--border);
   padding-top: clamp(12px, 2.2vw, 20px);
   display: grid;
@@ -145,8 +145,10 @@ footer {
   color: var(--muted);
 }
 
+*/
+
 /* =========================================================
-   Projects (new code)
+   Projects 1-7
    - uses meta-left/meta-center/meta-right in your HTML
 ========================================================= */
 
@@ -158,17 +160,9 @@ footer {
   padding-top: clamp(16px, 3vw, 28px);
 }
 
-
-/* Divider line where projects begin */
-.project:first-of-type::before {
-  content: "";
-  display: block;
-  /*border-top: 1px solid var(--border);*/
-  margin-bottom: clamp(12px, 2.2vw, 20px);
-} 
-
 /* Push projects down so they start lower on the page */
 .project:first-of-type {
+  border-top: none;
   margin-top: clamp(180px, 28vh, 420px);
 }
 
