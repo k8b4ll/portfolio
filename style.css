@@ -100,10 +100,10 @@ main {
 }
 
 .projects-rail {
-  grid-column: 1 / -1;  /* span both columns */
-  grid-row: 2;          /* sits at bottom of main */
-  border-top: 1px solid var(--border);  /* THIS is the line */
-  padding-top: clamp(12px, 2.2vw, 20px);
+  grid-column: 1 / -1;
+  margin-top: clamp(180px, 28vh, 420px); /* EMPTY SPACE */
+  border-top: 1px solid var(--border);  /* THE ONE LINE */
+  padding-top: clamp(16px, 3vw, 28px);  /* space between line + project */
   display: grid;
   gap: clamp(28px, 5vw, 64px);
 }
@@ -162,7 +162,6 @@ main {
 
 /* Push projects down so they start lower on the page */
 .project:first-of-type {
-  border-top: 1px solid var(--border);
   margin-top: clamp(180px, 28vh, 420px);
 }
 
