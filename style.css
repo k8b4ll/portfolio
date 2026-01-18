@@ -74,7 +74,7 @@ header {
 main {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr; /* left space + right column */
-  grid-auto-rows: min-content;
+  grid-template-rows: 1fr auto; /* pushes .projects to bottom of page */
   align-items: start;
   gap: clamp(28px, 5vw, 64px);
 }
@@ -82,6 +82,7 @@ main {
 /* "Selected Projects 2020 — 2025" label */
 .selected {
   grid-column: 2;         /* desktop: place in the right column */
+  grid-row: 1;            /* stays in the top “intro” row */
   justify-self: start;    /* align left within that right column */
   text-align: left;
   align-self: center;
@@ -96,6 +97,15 @@ main {
 .selected-anchor {
   width: min(520px, 100%);
   height: 140px; /* controls target text area */
+}
+
+.projects-rail {
+  grid-column: 1 / -1;  /* span both columns */
+  grid-row: 2;          /* sits at bottom of main */
+  border-top: 1px solid var(--border);  /* THIS is the line */
+  padding-top: clamp(12px, 2.2vw, 20px);
+  display: grid;
+  gap: clamp(28px, 5vw, 64px);
 }
 
 /* =========================================================
@@ -144,8 +154,8 @@ footer {
   grid-column: 1 / -1; /* span across both main columns */
   display: grid;
   gap: clamp(16px, 3vw, 28px);
-  padding-top: clamp(16px, 3vw, 28px);
-  border-top: 1px solid var(--border);
+  padding-top: 0;
+  border-top: 0;
 }
 
 /* Push projects down so they start lower on the page */
@@ -225,6 +235,7 @@ footer {
 
   .selected {
     grid-column: 1; /* mobile: single-column layout */
+   grid-row: 1;
     justify-self: start;
   }
 
@@ -232,6 +243,11 @@ footer {
     grid-template-columns: 1fr;
     text-align: left;
   }
+   
+.projects-rail {
+  grid-column: 1;
+  grid-row: 2;
+}
 
   .footer-center,
   .footer-right {
