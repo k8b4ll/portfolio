@@ -209,20 +209,6 @@ footer {
 }
 
 /* =========================================================
-   Canvas overlay
-========================================================= */
-
-#inkCanvas {
-  position: fixed;      /* removes it from layout flow */
-  inset: 0;             /* top:0 right:0 bottom:0 left:0 */
-  width: 100vw;
-  height: 100vh;        /* JS can still override height */
-  z-index: 999;         /* floats above header/footer */
-  pointer-events: none; /* IMPORTANT: doesn't block clicks */
-  display: block;
-}
-
-/* =========================================================
    Mobile
 ========================================================= */
 
