@@ -160,12 +160,12 @@ footer {
 
 
 /* Divider line where projects begin */
-/*.project:first-of-type::before {
+.project:first-of-type::before {
   content: "";
   display: block;
-  border-top: 1px solid var(--border);
+  /*border-top: 1px solid var(--border);*/
   margin-bottom: clamp(12px, 2.2vw, 20px);
-} */
+} 
 
 /* Push projects down so they start lower on the page */
 .project:first-of-type {
