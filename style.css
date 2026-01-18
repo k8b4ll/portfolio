@@ -148,6 +148,12 @@ footer {
   border-top: 1px solid var(--border);
 }
 
+/* Push projects down so they start lower on the page */
+.project:first-of-type {
+  margin-top: clamp(120px, 18vh, 240px);
+}
+
+
 /* Meta row that matches the footer's layout rhythm */
 .project-meta {
   display: grid;
