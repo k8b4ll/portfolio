@@ -156,13 +156,13 @@ main {
   grid-column: 1 / -1; /* span across both main columns */
   display: grid;
   gap: clamp(16px, 3vw, 28px);
-  /*border-top: 1px solid var(--border);*/
+  border-top: 1px solid var(--border);
   padding-top: clamp(16px, 3vw, 28px);
 }
 
 /* Push projects down so they start lower on the page */
 .project:first-of-type {
-  border-top: none;
+  border-top: 1px solid var(--border);
   margin-top: clamp(180px, 28vh, 420px);
 }
 
