@@ -158,6 +158,15 @@ footer {
   padding-top: clamp(16px, 3vw, 28px);
 }
 
+
+/* Divider line where projects begin */
+.project:first-of-type::before {
+  content: "";
+  display: block;
+  border-top: 1px solid var(--border);
+  margin-bottom: clamp(12px, 2.2vw, 20px);
+}
+
 /* Push projects down so they start lower on the page */
 .project:first-of-type {
   margin-top: clamp(180px, 28vh, 420px);
