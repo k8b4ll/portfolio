@@ -154,13 +154,13 @@ footer {
   grid-column: 1 / -1; /* span across both main columns */
   display: grid;
   gap: clamp(16px, 3vw, 28px);
-  padding-top: 0;
-  border-top: 0;
+  border-top: 1px solid var(--border);
+  padding-top: clamp(16px, 3vw, 28px);
 }
 
 /* Push projects down so they start lower on the page */
 .project:first-of-type {
-  margin-top: clamp(96px, 14vh, 180px);
+  margin-top: clamp(180px, 28vh, 420px);
 }
 
 /* Meta row that matches the footer's layout rhythm */
