@@ -150,9 +150,8 @@ footer {
 
 /* Push projects down so they start lower on the page */
 .project:first-of-type {
-  margin-top: clamp(120px, 18vh, 240px);
+  margin-top: clamp(96px, 14vh, 180px);
 }
-
 
 /* Meta row that matches the footer's layout rhythm */
 .project-meta {
