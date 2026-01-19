@@ -101,7 +101,7 @@ main {
 
 .projects-rail {
   grid-column: 1 / -1;
-  margin-top: clamp(80px, 28vh, 420px); /* EMPTY SPACE */
+  margin-top: clamp(80px, 14vh, 200px); /* EMPTY SPACE */
 padding-top: clamp(16px, 3vw, 28px);  /* space between line + project */
   display: grid;
   gap: clamp(28px, 5vw, 64px);
