@@ -102,7 +102,7 @@ main {
 .projects-rail {
   grid-column: 1 / -1;
   margin-top: clamp(180px, 28vh, 420px); /* EMPTY SPACE */
-  border-top: 1px solid var(--border);  /* THE ONE LINE */
+  /* border-top: 1px solid var(--border); */  /* THE ONE LINE */
   padding-top: clamp(16px, 3vw, 28px);  /* space between line + project */
   display: grid;
   gap: clamp(28px, 5vw, 64px);
